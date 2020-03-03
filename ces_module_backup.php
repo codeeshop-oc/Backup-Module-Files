@@ -11,11 +11,12 @@
 				mkdir($dst, 0777, true);
 				
 				while(( $file = readdir($dir)) ) {
-					if (( $file != '.' ) && ( $file != '..' )) {
+					if (( substr($file, -1) != '_' ) && ( $file != '.' ) && ( $file != '..' )) {
 						if ( is_dir($src . '/' . $file) ) {
 							$this->recursive_copy($src .'/'. $file, $dst .'/'. $file);
 						}
 						else {
+							// print_r($file);die;
 							copy($src .'/'. $file, $dst .'/'. $file);
 						}
 					}
@@ -27,8 +28,10 @@
 				$dir = substr($dst, 0, strrpos($dst, '/'));
 				mkdir($dir, 0777, true);
 				copy($src, $dst);
-			}
+			} else {
+				die('<strong>Not found : </strong> ' . $src);
 				// print_r($src);die;
+			}
 		}
 	}
 
@@ -50,11 +53,10 @@
 		require_once $json['default_path'] . '/admin/config.php';
 		require_once $json['default_path'] . '/config.php';
 
-		// foreach ($json['all_files'] as $key => $folder) {
-		// 	$copy->recursive_copy($json['default_path'] . '/' . $folder, $fix_dst . $folder);
-		// }
+		foreach ($json['all_files'] as $key => $folder) {
+			$copy->recursive_copy($json['default_path'] . '/' . $folder, $fix_dst . $folder);
+		}
 		foreach ($json['single_file'] as $key => $file) {
-			// print_r($json['default_path'] . '/' . $file);
 			$copy->recursive_copy($json['default_path'] . '/' . $file, $fix_dst . $file);
 		}
 	}

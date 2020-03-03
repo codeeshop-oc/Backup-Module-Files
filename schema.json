@@ -15,9 +15,9 @@
     "single_file": [
         "admin/controller/extension/module/ces_mobi_builder.php",
         "admin/language/en-gb/extension/module/ces_mobi_builder.php",
-        "admin/model/ces_mobi_builder/extension/module/ces_mobi_builder.php",       
+        "admin/model/extension/module/ces_mobi_builder.php",       
         "admin/view/javascript/ces/progressjs.min.js",
-        "admin/view/template/ces_mobi_builder/extension/module/ces_mobi_builder.twig",
+        "admin/view/template/extension/module/ces_mobi_builder.twig",
         "system/library/ces/cesAPI.php",
         "system/library/ces/cesMobiBuilder.php",
         "system/ces_mobi_builder.ocmod.xml"
