@@ -1,0 +1,28 @@
+{   
+    "default_path": "/opt/lampp/htdocs/oc303",
+    "default_copy_path": "/opt/lampp/htdocs/oc303/backup",
+    "all_files": [
+        "admin/controller/ces_mobi_builder",
+        "admin/language/en-gb/ces_mobi_builder",
+        "admin/model/ces_mobi_builder",
+        "admin/view/javascript/ces_mobi_builder",
+        "admin/view/stylesheet/ces",
+        "admin/view/template/ces_mobi_builder",
+        "catalog/controller/api/ces",
+        "catalog/language/en-gb/api/ces",
+        "catalog/model/api/ces"
+    ],
+    "single_file": [
+        "admin/controller/extension/module/ces_mobi_builder.php",
+        "admin/language/en-gb/extension/module/ces_mobi_builder.php",
+        "admin/model/ces_mobi_builder/extension/module/ces_mobi_builder.php",       
+        "admin/view/javascript/ces/progressjs.min.js",
+        "admin/view/template/ces_mobi_builder/extension/module/ces_mobi_builder.twig",
+        "system/library/ces/cesAPI.php",
+        "system/library/ces/cesMobiBuilder.php",
+        "system/ces_mobi_builder.ocmod.xml"
+    ],
+    "all_files_ignore": [
+
+    ]
+}

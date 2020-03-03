@@ -67,10 +67,7 @@
 </head>
 <body>
 	<form action="" method="post" enctype="multipart/form-data"> 
-		<label>Backup File Name</label> <input name="file_name" type="text" value="" placeholder="default name is backup1" />
-		<br />
-		<br />
-		<label>Backup File</label> <input name="file" type="file" />
+		<label>Upload Schema File</label> <input name="file" type="file" />
 		<br />
 		<br />
 		<input type="submit" name="submit" value="Submit"/>
