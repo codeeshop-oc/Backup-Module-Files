@@ -18,6 +18,8 @@
         "admin/model/extension/module/ces_mobi_builder.php",       
         "admin/view/javascript/ces/progressjs.min.js",
         "admin/view/template/extension/module/ces_mobi_builder.twig",
+        "catalog/model/extension/total/rne_credit.php",
+        "catalog/language/en-gb/extension/total/rne_credit.php",
         "system/library/ces/cesAPI.php",
         "system/library/ces/cesMobiBuilder.php",
         "system/ces_mobi_builder.ocmod.xml"
