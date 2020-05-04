@@ -1,4 +1,5 @@
-<?php	
+<?php
+	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);	
 	class Copy {
 		
 		function recursive_copy($src, $dst) {
@@ -50,8 +51,8 @@
 
 		$fix_dst = isset($json['default_copy_path']) ? $current_path . $json['default_copy_path'] . '/' : $current_path;
 
-		require_once $current_path . $json['default_path'] . '/admin/config.php';
-		require_once $current_path . $json['default_path'] . '/config.php';
+		include_once $current_path . $json['default_path'] . '/admin/config.php';
+		include_once $current_path . $json['default_path'] . '/config.php';
 
 		foreach ($json['all_files'] as $key => $folder) {
 			$copy->recursive_copy($current_path . $json['default_path'] . '/' . $folder, $fix_dst . $folder);
