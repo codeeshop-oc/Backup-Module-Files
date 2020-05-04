@@ -1,8 +1,5 @@
-<?php
-	error_reporting(1);	
+<?php	
 	class Copy {
-
-		public $name = 'this';
 		
 		function recursive_copy($src, $dst) {
 			if(is_dir($src)) {
@@ -36,6 +33,8 @@
 	}
 
 	$copy = new Copy();
+	$done = '';
+	$current_path = getcwd() . '/';
 
 	if(isset($_POST['submit']) && $_POST['submit'] == 'Submit') {
 		// print_r(getcwd());			
@@ -46,19 +45,21 @@
 			die;
 		}
 
-		$json = json_decode($json, true);
-	
-		$fix_dst = (isset($json['default_copy_path']) ? $json['default_copy_path'] : getcwd()) . '/';
+		$json = json_decode($json, true);		
 		
-		require_once $json['default_path'] . '/admin/config.php';
-		require_once $json['default_path'] . '/config.php';
+
+		$fix_dst = isset($json['default_copy_path']) ? $current_path . $json['default_copy_path'] . '/' : $current_path;
+
+		require_once $current_path . $json['default_path'] . '/admin/config.php';
+		require_once $current_path . $json['default_path'] . '/config.php';
 
 		foreach ($json['all_files'] as $key => $folder) {
-			$copy->recursive_copy($json['default_path'] . '/' . $folder, $fix_dst . $folder);
+			$copy->recursive_copy($current_path . $json['default_path'] . '/' . $folder, $fix_dst . $folder);
 		}
 		foreach ($json['single_file'] as $key => $file) {
-			$copy->recursive_copy($json['default_path'] . '/' . $file, $fix_dst . $file);
+			$copy->recursive_copy($current_path . $json['default_path'] . '/' . $file, $fix_dst . $file);
 		}
+		$done = 'success';
 	}
 ?>
 
@@ -68,6 +69,10 @@
 	<title>CES Module Backup</title>
 </head>
 <body>
+	<?php if($done == 'success') { ?>
+		<div style="display: block; width: 100%; background-color: lightgreen; font-size: 24px; text-align: center">Success</div>
+	<?php } ?>
+
 	<form action="" method="post" enctype="multipart/form-data"> 
 		<label>Upload Schema File</label> <input name="file" type="file" />
 		<br />
