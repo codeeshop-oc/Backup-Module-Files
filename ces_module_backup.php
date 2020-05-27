@@ -2,10 +2,29 @@
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);	
 	class Copy {
 		
+		function rrmdir($dir)
+		{
+		 if (is_dir($dir))
+		 {
+		  $objects = scandir($dir);
+
+		  foreach ($objects as $object)
+		  {
+		   if ($object != '.' && $object != '..')
+		   {
+		    if (filetype($dir.'/'.$object) == 'dir') {$this->rrmdir($dir.'/'.$object);}
+		    else {unlink($dir.'/'.$object);}
+		   }
+		  }
+
+		  reset($objects);
+		  rmdir($dir);
+		 }
+		}
+
 		function recursive_copy($src, $dst) {
 			if(is_dir($src)) {
 				$dir = opendir($src);
-				
 				mkdir($dst, 0777, true);
 				
 				while(( $file = readdir($dir)) ) {
@@ -51,8 +70,10 @@
 
 		$fix_dst = isset($json['default_copy_path']) ? $current_path . $json['default_copy_path'] . '/' : $current_path;
 
-		include_once $current_path . $json['default_path'] . '/admin/config.php';
-		include_once $current_path . $json['default_path'] . '/config.php';
+		@$copy->rrmdir($fix_dst . $folder);
+
+		@require_once $current_path . $json['default_path'] . '/admin/config.php';
+		@require_once $current_path . $json['default_path'] . '/config.php';
 
 		foreach ($json['all_files'] as $key => $folder) {
 			$copy->recursive_copy($current_path . $json['default_path'] . '/' . $folder, $fix_dst . $folder);
