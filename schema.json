@@ -2,37 +2,13 @@
     "default_path": "",
     "default_copy_path": "backup",
     "all_files": [
-        "admin/controller/ces_pos",
-        "admin/language/en-gb/ces_pos",
-        "admin/model/ces_pos",
-        "admin/view/template/ces_pos",
-        "admin/view/javascript/ces",
-        "admin/view/javascript/ces_pos",
-        "admin/view/stylesheet/ces"
+        "path/to/folder",
+        "path/to/folder"
     ],
     "single_file": [
-        "admin/controller/extension/module/ces_pos.php",
-        "catalog/controller/api/ces/dummyData.php",
-        "catalog/controller/api/ces/pos.php",        
-        "admin/language/en-gb/extension/module/ces_pos.php",
-        "admin/language/en-gb/extension/payment/ces_pos_cash.php",
-        "catalog/language/en-gb/extension/total/ces_pos_credit.php",
-        "catalog/language/en-gb/extension/total/ces_pos_discount.php",
-        "catalog/language/en-gb/api/ces/pos.php",
-        "admin/model/extension/module/ces_pos.php",
-        "catalog/model/api/ces/pos.php",
-        "catalog/model/api/ces/pos_customer.php",
-        "catalog/model/api/ces/pos_order.php",
-        "catalog/model/extension/payment/ces_pos_cash.php",
-        "catalog/model/extension/total/ces_pos_credit.php",
-        "catalog/model/extension/total/ces_pos_discount.php",
-        "admin/view/template/extension/module/ces_pos.twig",        
-        "system/library/ces/cesAPI.php",
-        "system/library/ces/cesPOS.php",
-        "system/library/ces/cesPOSModel.php",
-        "system/ces_pos.ocmod.xml"
+        "path/to/file",
+        "path/to/file"
     ],
     "all_files_ignore": [
-
     ]
 }
