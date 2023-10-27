@@ -2,6 +2,7 @@
 	if(empty($_GET['er'])) {
 		error_reporting(0);
 	} else {
+		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
 	}
 	class Copy {
@@ -51,6 +52,7 @@
 		$json = json_decode($json, true);
 
 
+		$folder_name = $json['default_copy_path'];
 		$fix_dst = '';
 		if(isset($json['default_copy_path'])) {
 			$json['default_copy_path'] = str_replace("//", "/", $json['default_copy_path']);
@@ -77,8 +79,59 @@
 			$copy->recursive_copy($current_new_path . $file, $fix_dst . $file);
 		}
 
+		// echo $fix_dst;
+		// die;
+		echo "Zip Files<br>";
+		$zipFileName = 'oc_module.zip';
+		zipFiles($fix_dst, $zipFileName, $current_path);
+		move_to_folder($fix_dst, $zipFileName);
+
 		umask($old_umask);
 		$done = 'success';
+	}
+
+	function move_to_folder($uploadFolder, $zipFileName) {
+ 		if (rename($zipFileName, $uploadFolder . '/' . $zipFileName)) {
+	        echo "ZIP file moved to the $uploadFolder folder.";
+	    } else {
+	        echo "Failed to move the ZIP file to the $uploadFolder folder.";
+	    }
+		echo "<br>";
+	}
+
+	function zipFiles($folderToZip, $zipFileName, $current_path) {
+		// Define the folder you want to zip
+		
+		// Create a new ZipArchive object
+		$zip = new ZipArchive();
+
+		// Open the ZIP file for writing
+		if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+		    // Add files and subdirectories to the ZIP file
+		    $files = new RecursiveIteratorIterator(
+		        new RecursiveDirectoryIterator($folderToZip),
+		        RecursiveIteratorIterator::SELF_FIRST
+		    );
+		    
+	        foreach ($files as $file) {
+		        $file = realpath($file);
+		        $localName = str_replace($current_path, '', $file);
+		        if (is_dir($file)) {
+		            // Do not add directories
+		            continue;
+		        } elseif (is_file($file)) {
+		            $zip->addFile($file, $localName);
+		        }
+		    }
+
+		    // Close the ZIP file
+		    $zip->close();
+
+		    echo "ZIP archive created successfully!";
+		} else {
+		    echo "Failed to create ZIP archive.";
+		}
+		echo "<br>";
 	}
 ?>
 
