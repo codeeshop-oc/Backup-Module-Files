@@ -141,7 +141,7 @@
 		// echo $fix_dst;
 		// die;
 		echo "Zip Files<br>";
-		$zipFileName = 'oc_module.zip';
+		$zipFileName = 'upload.ocmod.zip';
 		$backupFiles->zipFiles($fix_dst, $zipFileName, $current_path);
 		$backupFiles->move_to_folder($fix_dst, $zipFileName);
 
