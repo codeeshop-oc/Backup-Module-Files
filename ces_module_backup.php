@@ -1,7 +1,7 @@
 <?php
 	if(empty($_GET['er'])) {
 		error_reporting(0);
-	} else {		
+	} else {
 		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
 	}
@@ -46,14 +46,18 @@
 		public function default_copy($source, $destination) {
 			$all_files_ignore = self::$json['all_files_ignore'];
 
-			$new_current_file = str_replace(self::$current_path, '', $source);			
+			$new_current_file = str_replace(self::$current_path, '', $source);
 			if(!in_array($new_current_file, $all_files_ignore)) {
+				if(strpos($source, '.ocmod.xml')) {
+					$prefix_destination = substr($destination, 0, strpos($destination, 'system'));
+					$destination = $prefix_destination . '../install.xml';
+				}
 				copy($source, $destination);
 			}
 		}
 
 		public function move_to_folder($uploadFolder, $zipFileName) {
-	 		if (rename($zipFileName, $uploadFolder . '/' . $zipFileName)) {
+			if (rename($zipFileName, $uploadFolder . '/../' . $zipFileName)) {
 		        echo "ZIP file moved to the 'upload' folder.";
 		    } else {
 		        echo "Failed to move the ZIP file to the 'upload' folder.";
@@ -72,7 +76,7 @@
 			        new RecursiveDirectoryIterator($folderToZip),
 			        RecursiveIteratorIterator::SELF_FIRST
 			    );
-			    
+
 		        foreach ($files as $file) {
 			        $file = realpath($file);
 			        $localName = str_replace($current_path, '', $file);
@@ -82,6 +86,11 @@
 			        } elseif (is_file($file)) {
 			            $zip->addFile($file, $localName);
 			        }
+			    }
+
+			    if (is_file($current_path . 'install.xml')) {
+			        $localName = 'install.xml';
+			        $zip->addFile($current_path . 'install.xml', $localName);
 			    }
 
 			    // Close the ZIP file
@@ -112,6 +121,9 @@
 		$backupFiles->updateJson($json, $current_path);
 
 		$folder_name = $json['default_copy_path'];
+
+		$json['default_copy_path'] .= '/upload';
+
 		$fix_dst = '';
 		if(isset($json['default_copy_path'])) {
 			$json['default_copy_path'] = str_replace("//", "/", $json['default_copy_path']);
@@ -138,17 +150,16 @@
 			$backupFiles->recursive_copy($current_new_path . $file, $fix_dst . $file);
 		}
 
-		// echo $fix_dst;
-		// die;
 		echo "Zip Files<br>";
 		$zipFileName = 'upload.ocmod.zip';
-		$backupFiles->zipFiles($fix_dst, $zipFileName, $current_path);
+
+		$backupFiles->zipFiles($fix_dst, $zipFileName, $current_path . $folder_name . '/');
 		$backupFiles->move_to_folder($fix_dst, $zipFileName);
 
 		umask($old_umask);
 		$done = 'success';
 	}
- 
+
 ?>
 
 <!DOCTYPE html>
